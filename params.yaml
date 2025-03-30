@@ -1,0 +1,6 @@
+data_paths:
+  raw_data : "/home/saba/vs_code/ml_project_end_to_end/boston.csv"
+
+ingestion_params:
+  test_size: 0.4  # 20% of data used for testing
+  random_state: 40
