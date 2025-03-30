@@ -1,5 +1,77 @@
 schema: '2.0'
 stages:
+  pre_processing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - path: data/ingestion
+      hash: md5
+      md5: ccf33bc12831f2b6cd9408bc83a9fd99.dir
+      size: 89372
+      nfiles: 2
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: 21be89063dec226558356b950cbeb97e
+      size: 4577
+    outs:
+    - path: data/preprocessing
+      hash: md5
+      md5: a1425456117c6ffeae17b694fc4ee2ab.dir
+      size: 291147
+      nfiles: 2
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+    - path: data/preprocessing
+      hash: md5
+      md5: a1425456117c6ffeae17b694fc4ee2ab.dir
+      size: 291147
+      nfiles: 2
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: 2887a7dabed9991903a8bd83eec7cf46
+      size: 3953
+    outs:
+    - path: data/feature_engineering
+      hash: md5
+      md5: 041a1d874c560074dae4cb71639230fa.dir
+      size: 323124
+      nfiles: 2
+  model_development:
+    cmd: python src/model_development.py
+    deps:
+    - path: data/feature_engineering
+      hash: md5
+      md5: 041a1d874c560074dae4cb71639230fa.dir
+      size: 323124
+      nfiles: 2
+    - path: src/model_development.py
+      hash: md5
+      md5: af3f99d578d3d970dcb3aff91839579c
+      size: 2640
+    outs:
+    - path: models
+      hash: md5
+      md5: c0df9925b56a8b9f0c1fec00648a4cb3.dir
+      size: 16230705
+      nfiles: 1
+  evaluation:
+    cmd: python src/model_evaluation.py
+    deps:
+    - path: models
+      hash: md5
+      md5: c0df9925b56a8b9f0c1fec00648a4cb3.dir
+      size: 16230705
+      nfiles: 1
+    - path: src/model_evaluation.py
+      hash: md5
+      md5: eb4e7f0680e6c6322b0d37cf174a409c
+      size: 3449
+    outs:
+    - path: evaluation
+      hash: md5
+      md5: 249afe8ab53c6e8a1f10e52039e0d406.dir
+      size: 106
+      nfiles: 1
   ingestion:
     cmd: python src/data_ingestion.py
     deps:
@@ -10,83 +82,11 @@ stages:
     params:
       params.yaml:
         ingestion_params:
-          test_size: 0.4
-          random_state: 40
+          test_size: 0.11
+          random_state: 45
     outs:
     - path: data/ingestion
       hash: md5
-      md5: 3fe87e8d8968238682b54fc90e85b164.dir
+      md5: ccf33bc12831f2b6cd9408bc83a9fd99.dir
       size: 89372
       nfiles: 2
-  pre_processing:
-    cmd: python src/data_preprocessing.py
-    deps:
-    - path: data/ingestion
-      hash: md5
-      md5: 3fe87e8d8968238682b54fc90e85b164.dir
-      size: 89372
-      nfiles: 2
-    - path: src/data_preprocessing.py
-      hash: md5
-      md5: 21be89063dec226558356b950cbeb97e
-      size: 4577
-    outs:
-    - path: data/preprocessing
-      hash: md5
-      md5: 8ce9b83e8d3fbfeed9708014b67c3a75.dir
-      size: 290467
-      nfiles: 2
-  feature_engineering:
-    cmd: python src/feature_engineering.py
-    deps:
-    - path: data/preprocessing
-      hash: md5
-      md5: 8ce9b83e8d3fbfeed9708014b67c3a75.dir
-      size: 290467
-      nfiles: 2
-    - path: src/feature_engineering.py
-      hash: md5
-      md5: 2887a7dabed9991903a8bd83eec7cf46
-      size: 3953
-    outs:
-    - path: data/feature_engineering
-      hash: md5
-      md5: 52e62ca2f18bc6efac144e690a26d6ab.dir
-      size: 323251
-      nfiles: 2
-  model_development:
-    cmd: python src/model_development.py
-    deps:
-    - path: data/feature_engineering
-      hash: md5
-      md5: 52e62ca2f18bc6efac144e690a26d6ab.dir
-      size: 323251
-      nfiles: 2
-    - path: src/model_development.py
-      hash: md5
-      md5: af3f99d578d3d970dcb3aff91839579c
-      size: 2640
-    outs:
-    - path: models
-      hash: md5
-      md5: 7f8a4c36d77026c59dad3b7bd09157e3.dir
-      size: 10937121
-      nfiles: 1
-  evaluation:
-    cmd: python src/model_evaluation.py
-    deps:
-    - path: models
-      hash: md5
-      md5: 7f8a4c36d77026c59dad3b7bd09157e3.dir
-      size: 10937121
-      nfiles: 1
-    - path: src/model_evaluation.py
-      hash: md5
-      md5: eb4e7f0680e6c6322b0d37cf174a409c
-      size: 3449
-    outs:
-    - path: evaluation
-      hash: md5
-      md5: 09590b54ae8d86ea98e2150d3bb00707.dir
-      size: 100
-      nfiles: 1
