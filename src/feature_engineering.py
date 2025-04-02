@@ -53,9 +53,9 @@ def feature_engineering(
     logging.info("Dropped 'YearBuilt' after creating 'House_Age'.")
 
     # Create 'Total_Bathrooms' by combining Bathrooms and Floors
-    train_data["Total_Bathrooms"] = train_data["Bathrooms"] * train_data["Floors"]
-    test_data["Total_Bathrooms"] = test_data["Bathrooms"] * test_data["Floors"]
-    logging.info("Feature 'Total_Bathrooms' created successfully!")
+    # train_data["Total_Bathrooms"] = train_data["Bathrooms"] * train_data["Floors"]
+    # test_data["Total_Bathrooms"] = test_data["Bathrooms"] * test_data["Floors"]
+    # logging.info("Feature 'Total_Bathrooms' created successfully!")
 
     # Create 'Is_Luxury_House' based on Area > 3000 and Condition == Excellent
     if "Condition_Excellent" in train_data.columns and "Condition_Excellent" in test_data.columns:
